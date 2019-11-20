@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export class Splash extends Component {
   render() {
@@ -21,11 +22,7 @@ export class Splash extends Component {
         </section>
 
         <section>
-          <a href="dashboard.html"> Try Now</a>
-        </section>
-
-        <section>
-          <a href="login-signup.html">Log In or Sign Up</a>
+          <Link to="login">Log In</Link> or <Link to="signup">Sign Up</Link>
         </section>
       </main>
     );

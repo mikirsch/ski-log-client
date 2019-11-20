@@ -1,37 +1,57 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import AuthApiService from '../../services/auth-api-service';
+import TokenService from '../../services/token-service';
 
 export class LoginForm extends Component {
-  render() {
-    return (
-      <div>
-        <p>
-          Not yet implemented, <Link to="/dashboard">go to dashboard</Link>
-        </p>
-        <main role="main">
-          <header role="banner">
-            <h1>Continue Tracking</h1>
-          </header>
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+  handleSubmitJwtAuth = event => {
+    event.preventDefault();
+    this.setState({ error: null });
+    const { user_name, password } = event.target;
 
-          <section>
-            <header>
-              <h2>Login</h2>
-            </header>
-            <form name="login" id="login" action="login">
-              <label for="login-uname">Username: </label>
-              <input type="text" name="login-uname" id="login-uname" />
-              <label for="login-pass">Password: </label>
-              <input type="password" name="login-pass" id="login-pass" />
-              <button type="submit" name="login">
-                Log in
-              </button>
-            </form>
-            <p>Forgot username or password?</p>
-          </section>
-        </main>
-      </div>
+    AuthApiService.postLogin({
+      user_name: user_name.value,
+      password: password.value
+    })
+      .then(res => {
+        user_name.value = '';
+        password.value = '';
+        TokenService.saveAuthToken(res.authToken);
+        this.props.history.push('/dashboard');
+      })
+      .catch(res => {
+        this.setState({ error: res.error });
+      });
+  };
+
+  render() {
+    const { error } = this.state;
+    return (
+      <form className="LoginForm" onSubmit={this.handleSubmitJwtAuth}>
+        <div role="alert">
+          {error && <p className="login-error error">{<>error</>}</p>}
+        </div>
+        <div className="user_name">
+          <label htmlFor="LoginForm__user_name">User name</label>
+          <input required name="user_name" id="LoginForm__user_name" />
+        </div>
+        <div className="password">
+          <label htmlFor="LoginForm__password">Password</label>
+          <input
+            required
+            name="password"
+            type="password"
+            id="LoginForm__password"
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
     );
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

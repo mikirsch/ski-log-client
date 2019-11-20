@@ -2,33 +2,63 @@ import React, { Component } from 'react';
 
 export class AddBasics extends Component {
   render() {
+    const readState = this.props.readState;
     return (
       <fieldset name="add-basics">
         <legend>The Basics</legend>
-        <label for="area">Location: </label>
-        <select name="area" required>
+        <label htmlFor="day">
+          When was this ski day?{' '}
+          {readState.futureDateSelected && (
+            <span className="date-error error">
+              The selected date is in the future
+            </span>
+          )}
+        </label>
+        <input
+          type="date"
+          name="day"
+          id="day"
+          value={this.props.formatDate(readState.date)}
+          onChange={this.props.handleDateChange}
+        />
+        {/*<label htmlFor="area">Location: </label>
+         <select name="area" required>
           <option value="">Choose or add a location</option>
           <option value="keystone">Keystone</option>
           <option value="vail">Vail</option>
           <option value="add">Add a new location!</option>
-        </select>
-        <label for="new-area">Add a new location: </label>
-        <input name="new-area" id="new-area" type="text" />
-        <label for="type" required>
+        </select> */}
+
+        <label htmlFor="new-area">Location: </label>
+        <input
+          name="new-area"
+          id="new-area"
+          type="text"
+          value={readState.newArea}
+          onChange={event =>
+            this.props.handleGenericStringChange('newArea', event)
+          }
+        />
+        {/* <label htmlFor="type" required>
           What type of skiing did you do?
         </label>
         <select name="type" id="ski-type">
           <option value="downhill">downhill</option>
           <option value="x-c">cross country</option>
-        </select>
-        <label for="duration">
-          How long did you ski? (optional) (hours:minutes)
+        </select> */}
+        <label htmlFor="duration">
+          How long did you ski? (optional) (hours:minutes){' '}
+          {readState.durationError && (
+            <span className="duration-error error">Duration out of bounds</span>
+          )}
         </label>
         <input
           type="text"
           placeholder="1:23"
           name="duration"
           id="ski-duration"
+          // value={readState.duration}
+          onChange={this.props.handleDurationChange}
         />
       </fieldset>
     );

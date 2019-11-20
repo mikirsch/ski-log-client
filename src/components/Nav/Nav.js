@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Nav.css';
+import TokenService from '../../services/token-service';
 
 export class Nav extends Component {
+  logout = () => {
+    TokenService.clearAuthToken();
+  };
   render() {
     return (
       <div className="Nav">
@@ -11,7 +15,15 @@ export class Nav extends Component {
             <Link to="/">Home</Link>
           </li>
           <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
             <Link to="/login">Log in</Link>
+          </li>
+          <li>
+            <Link to="/" onClick={this.logout}>
+              Log out
+            </Link>
           </li>
           <li>
             <Link to="/signup">Sign up</Link>
