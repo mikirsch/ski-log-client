@@ -2,43 +2,72 @@ import React, { Component } from 'react';
 import TimeSelector from '../TimeSelector/TimeSelector';
 import DataApiService from '../../services/data-api-service';
 import ResultsViewer from '../ResultsViewer/ResultsViewer';
+import { formatDate, onChangeUtil } from '../../Utilities/UtilityFunctions';
 
 export class ViewData extends Component {
   state = {
     timeframe: 'custom',
-    'result-type': 'list',
+    resultType: 'list',
     chooseTime: true,
-    results: []
+    beginDate: formatDate(new Date()),
+    endDate: formatDate(new Date()),
+    results: [],
+    searched: false
   };
 
-  onSelectChange = event => {
-    const newState = { ...this.state };
-    newState[event.target.id] = event.target.value;
+  onChange = event => {
+    const newState = onChangeUtil(event, this.state);
     this.setState(newState);
   };
   onResultTypeChange = event => {
     this.setState({ chooseTime: event.target.value !== 'notes-for-area' });
-    this.onSelectChange(event);
+    this.onChange(event);
   };
+  updateOther = target => {
+    const newState = {};
+    newState[target] = document.getElementById(target).value;
+    this.setState(newState);
+  };
+
+  tzfix = date => date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   handleSubmit = event => {
     console.log(event);
     event.preventDefault();
-    let queryString = `?type=${this.state['result-type']}`;
-    if (this.state.chooseTime) {
-      const beginDate = document.getElementById('begin').value;
-      const endDate = document.getElementById('end')
-        ? document.getElementById('end').value
-        : null;
-
-      queryString += `&beginDate=${beginDate}`;
-      queryString += endDate ? `&endDate=${endDate}` : '';
+    const options = { ...this.state };
+    delete options.chooseTime;
+    delete options.results;
+    switch (options.timeframe) {
+      case 'all':
+        options.beginDate = '1900-01-01';
+        break;
+      case 'season':
+        let year = options.beginDate.split('-')[0];
+        options.beginDate = year + '-09-01'; //I know of some ski areas that have historically been open into August
+        options.endDate = Number(year) + 1 + '-08-31';
+        break;
+      case 'month':
+        let month = new Date(options.beginDate);
+        this.tzfix(month);
+        options.beginDate = formatDate(
+          new Date(month.getFullYear(), month.getMonth(), 1)
+        );
+        //day 0 is last day of previous month
+        options.endDate = formatDate(
+          new Date(month.getFullYear(), month.getMonth() + 1, 0)
+        );
+        break;
+      case 'date':
+        options.endDate = options.beginDate;
+        break;
+      default:
     }
-    DataApiService.getLogs(queryString).then(results => {
-      this.setState({ results });
-      console.log('getting logs...');
-      console.log(results);
-    });
+    this.setState({ results: null, error: null });
+    DataApiService.getLogs(options)
+      .then(results => {
+        this.setState({ results, searched: true });
+      })
+      .catch(e => 0);
   };
   render() {
     return (
@@ -54,19 +83,25 @@ export class ViewData extends Component {
             <select
               id="timeframe"
               value={this.state.timeframe}
-              onChange={this.onSelectChange}
+              onChange={this.onChange}
             >
-              <option value="day">Day</option>
+              <option value="date">Day</option>
               <option value="month">Month</option>
               <option value="season">Season</option>
               <option value="all">All</option>
               <option value="custom">Custom</option>
             </select>
-            <TimeSelector period={this.state.timeframe} />
+            <TimeSelector
+              period={this.state.timeframe}
+              changeHandler={this.onChange}
+              updateOther={this.updateOther}
+              beginDate={this.state.beginDate}
+              endDate={this.state.endDate}
+            />
 
             <select
-              id="result-type"
-              value={this.state['result-type']}
+              id="resultType"
+              value={this.state.resultType}
               onChange={this.onResultTypeChange}
             >
               <option value="summary-time">Summary of period</option>
@@ -85,7 +120,11 @@ export class ViewData extends Component {
         </section>
         <section>
           <h2>Results</h2>
-          <ResultsViewer results={this.state.results} />
+          {this.state.searched && !this.state.results && <p>No logs found</p>}
+          <ResultsViewer
+            results={this.state.results}
+            type={this.state.resultType}
+          />
         </section>
       </main>
     );

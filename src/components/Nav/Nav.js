@@ -6,6 +6,7 @@ import TokenService from '../../services/token-service';
 export class Nav extends Component {
   logout = () => {
     TokenService.clearAuthToken();
+    this.props.onLogout();
   };
   render() {
     return (
@@ -17,17 +18,22 @@ export class Nav extends Component {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li>
-            <Link to="/login">Log in</Link>
-          </li>
-          <li>
-            <Link to="/" onClick={this.logout}>
-              Log out
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup">Sign up</Link>
-          </li>
+          {TokenService.hasAuthToken() ? (
+            <li>
+              <Link to="/" onClick={this.logout}>
+                Log out
+              </Link>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Log in</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign up</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     );

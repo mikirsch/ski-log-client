@@ -3,7 +3,14 @@ import config from '../config';
 const { API_ENDPOINT } = config;
 
 const DataApiService = {
-  getLogs(queryString = '') {
+  getLogs(objOptions) {
+    let queryString = '';
+    for (let key in objOptions) {
+      if (objOptions.hasOwnProperty(key)) {
+        queryString += `&${key}=${objOptions[key]}`;
+      }
+    }
+    queryString = '?' + queryString.slice(1);
     return fetch(`${API_ENDPOINT}/logs${queryString}`, {
       headers: {
         Authorization: `bearer ${TokenService.getAuthToken()}`
