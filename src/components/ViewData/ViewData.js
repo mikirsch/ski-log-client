@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import TimeSelector from '../TimeSelector/TimeSelector';
 import DataApiService from '../../services/data-api-service';
 import ResultsViewer from '../ResultsViewer/ResultsViewer';
-import { formatDate, onChangeUtil } from '../../Utilities/UtilityFunctions';
+import {
+  formatDate,
+  onChangeUtil,
+  tzFix
+} from '../../Utilities/UtilityFunctions';
 
 export class ViewData extends Component {
   state = {
@@ -20,16 +24,17 @@ export class ViewData extends Component {
     this.setState(newState);
   };
   onResultTypeChange = event => {
-    this.setState({ chooseTime: event.target.value !== 'notes-for-area' });
-    this.onChange(event);
+    const newState = { chooseTime: event.target.value !== 'notes-for-area' };
+    if (event.target.value === 'notes-for-area') {
+      newState.timeframe = 'all';
+    }
+    this.setState(newState, this.onChange(event));
   };
   updateOther = target => {
     const newState = {};
     newState[target] = document.getElementById(target).value;
     this.setState(newState);
   };
-
-  tzfix = date => date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   handleSubmit = event => {
     console.log(event);
@@ -84,6 +89,7 @@ export class ViewData extends Component {
               id="timeframe"
               value={this.state.timeframe}
               onChange={this.onChange}
+              disabled={this.state.resultType === 'notes-for-area'}
             >
               <option value="date">Day</option>
               <option value="month">Month</option>
@@ -108,7 +114,7 @@ export class ViewData extends Component {
               <option value="list">List all visits within period</option>
               <option value="list-notes">List visits with notes</option>
               <option value="summary-area">Summarize by ski area</option>
-              <option value="area-time">Ski areas by time spent</option>
+              {/* <option value="area-time">Ski areas by time spent</option> */}
               <option value="notes-for-area">
                 Find notes tied to a ski area
               </option>

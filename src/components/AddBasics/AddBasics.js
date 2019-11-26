@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { formatDate } from '../../Utilities/UtilityFunctions';
 
 export class AddBasics extends Component {
   render() {
@@ -18,7 +19,7 @@ export class AddBasics extends Component {
           type="date"
           name="day"
           id="day"
-          value={this.props.formatDate(readState.date)}
+          value={formatDate(readState.date)}
           onChange={this.props.handleDateChange}
         />
         {/*<label htmlFor="area">Location: </label>
@@ -28,7 +29,6 @@ export class AddBasics extends Component {
           <option value="vail">Vail</option>
           <option value="add">Add a new location!</option>
         </select> */}
-
         <label htmlFor="new-area">Location: </label>
         <input
           name="new-area"
@@ -36,7 +36,7 @@ export class AddBasics extends Component {
           type="text"
           value={readState.newArea}
           onChange={event =>
-            this.props.handleGenericStringChange('newArea', event)
+            this.props.handleGenericChange('newArea', event.target.value)
           }
         />
         {/* <label htmlFor="type" required>
@@ -60,6 +60,13 @@ export class AddBasics extends Component {
           // value={readState.duration}
           onChange={this.props.handleDurationChange}
         />
+        <input
+          type="checkbox"
+          id="vert"
+          checked={readState.vert}
+          onChange={this.props.handleToggle}
+        />{' '}
+        <label htmlFor="vert">I would like to record my vert for the day</label>
       </fieldset>
     );
   }

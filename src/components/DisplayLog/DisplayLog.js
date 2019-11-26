@@ -11,7 +11,14 @@ export class DisplayLog extends Component {
     return (
       <div>
         <p>
-          Date: {this.formateDate(log.date)} Ski area: {log.ski_area}
+          Date: {this.formateDate(log.date)} Ski area: {log.ski_area}{' '}
+          {log.vert && `Vert: ${log.vert}`}{' '}
+          {log.duration &&
+            `Duration: ${log.duration.hours}:${
+              log.duration.minutes < 10
+                ? '0' + log.duration.minutes
+                : log.duration.minutes
+            }`}
         </p>
       </div>
     );

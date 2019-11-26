@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import AddBasics from '../AddBasics/AddBasics';
 import DataApiService from '../../services/data-api-service';
+import { onChangeUtil } from '../../Utilities/UtilityFunctions';
+import Vert from '../Vert/Vert';
 
 export class AddActivity extends Component {
   constructor(props) {
@@ -9,21 +11,29 @@ export class AddActivity extends Component {
       area: '',
       newArea: '',
       duration: null,
+      durationError: false,
       date: new Date(),
       futureDateSelected: false,
-      durationError: false,
       error: null,
-      submitted: false
+      submitted: false,
+      vert: false,
+      totalVert: 0
     };
   }
-  formatDate = date => {
-    return `${date.getFullYear()}-${
-      date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-    }-${date.getDate()}`;
+
+  onChange = event => {
+    const newState = onChangeUtil(event, this.state);
+    newState.submitted = false;
+    this.setState(newState);
   };
-  handleGenericStringChange = (key, event) => {
-    let newState = { ...this.state, submitted: false };
-    newState[key] = event.target.value;
+  onToggle = event => {
+    const newState = {};
+    newState[event.target.id] = !this.state[event.target.id];
+    this.setState(newState);
+  };
+  handleGenericChange = (key, value) => {
+    let newState = { submitted: false };
+    newState[key] = value;
     this.setState(newState);
   };
   handleDateChange = event => {
@@ -39,7 +49,7 @@ export class AddActivity extends Component {
     const time = event.target.value.split(':').map(a => Number(a));
     let durationError = false;
     if (time[0] > 23 || time[1] > 59) {
-      //must be less than a full day
+      //must be less than a full day, and the minutes should be minutes
       durationError = true;
     } else if (time[0] < 0 || time[1] < 0) {
       // negative components are bad
@@ -60,12 +70,16 @@ export class AddActivity extends Component {
     }
     const { date, duration, newArea } = this.state;
 
-    DataApiService.postLog({
+    const log = {
       date: date.toISOString(),
       duration,
       ski_area: newArea,
       location: 'NYI'
-    });
+    };
+    if (this.state.vert) {
+      log.vert = this.state.totalVert;
+    }
+    DataApiService.postLog(log);
     this.setState({ submitted: true });
   };
   render() {
@@ -78,14 +92,31 @@ export class AddActivity extends Component {
           <h2>Add a Ski Day</h2>
           <form id="add-ski">
             <AddBasics
-              handleGenericStringChange={this.handleGenericStringChange}
+              handleGenericChange={this.handleGenericChange}
               handleDateChange={this.handleDateChange}
               handleDurationChange={this.handleDurationChange}
-              formatDate={this.formatDate}
-              readState={this.state}
+              handleToggle={this.onToggle}
+              newArea={this.state.newArea}
+              readState={{ ...this.state }}
             />
+            {this.state.vert && (
+              <Vert
+                onChange={this.onChange}
+                genericChange={this.handleGenericChange}
+                totalVert={this.state.totalVert}
+              />
+            )}
           </form>
-          <button type="submit" htmlFor="add-ski" onClick={this.handleSubmit}>
+          <button
+            type="submit"
+            htmlFor="add-ski"
+            onClick={this.handleSubmit}
+            disabled={
+              this.state.error ||
+              this.state.durationError ||
+              this.state.submitted
+            }
+          >
             Submit
           </button>
           {this.state.submitted && <p>Visit added!</p>}

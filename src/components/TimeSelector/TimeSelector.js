@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { formatDate } from '../../Utilities/UtilityFunctions';
 
 export class TimeSelector extends Component {
   constructor(props) {

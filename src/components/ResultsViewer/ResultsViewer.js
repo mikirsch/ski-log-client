@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DisplayLog from '../DisplayLog/DisplayLog';
 import DisplayArea from '../DisplayArea/DisplayArea';
+import ActivityByTime from '../ActivityByTime/ActivityByTime';
 
 export class ResultsViewer extends Component {
   listResults = results => (
@@ -12,12 +13,7 @@ export class ResultsViewer extends Component {
   );
 
   summaryTime = results => {
-    const days = new Set(results.map(result => result.date)).size;
-    return (
-      <div>
-        <p>Days skied: {days} </p>
-      </div>
-    );
+    return <ActivityByTime logs={results} filter={false} />;
   };
 
   listNotes = results => {
@@ -25,12 +21,11 @@ export class ResultsViewer extends Component {
   };
 
   summaryArea = results => {
-    const areas = new Set(results.map(result => result.ski_area));
+    const areas = Array.from(new Set(results.map(result => result.ski_area)));
     console.log(areas);
     return (
       <ul>
-        <li>not working yet?</li>
-        {areas.forEach(area => {
+        {areas.map(area => {
           console.log(area);
           const days = results.reduce(
             (acc, cur) => (cur.ski_area === area ? ++acc : acc),
