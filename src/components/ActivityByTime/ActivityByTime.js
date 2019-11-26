@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
 export class ActivityByTime extends Component {
+  defaultProps;
   render() {
-    const { time, current, start } = this.props;
-    const beginDate = current ? null : new Date(start);
-    let timeString;
+    const { time, current, start, filter } = this.props;
+    this.defaultProps = { filter: true };
+    let beginDate = current ? new Date() : new Date(start);
+    let endDate;
+    let timeString = '';
     switch (time) {
       case 'month':
         timeString = current
@@ -13,6 +16,12 @@ export class ActivityByTime extends Component {
               month: 'long',
               year: 'numeric'
             })}`;
+        beginDate = new Date(beginDate.getFullYear(), beginDate.getMonth(), 1);
+        endDate = new Date(
+          beginDate.getFullYear(),
+          beginDate.getMonth() + 1,
+          0
+        );
         break;
       case 'week':
         timeString = current
@@ -22,25 +31,41 @@ export class ActivityByTime extends Component {
               month: 'long',
               year: 'numeric'
             })}`;
+
         break;
       case 'season':
         timeString = current
-          ? 'This season'
+          ? 'This Season'
           : `Season of ${beginDate.getFullYear()}-${beginDate.getFullYear() +
               1}`;
+        beginDate = new Date(beginDate.getFullYear(), 8, 1);
+        endDate = new Date(beginDate.getFullYear() + 1, 8, 0);
         break;
 
       default:
-        throw new Error('Invalid time parameter');
     }
+    let logs = this.props.logs;
+    if (filter) {
+      logs = logs.filter(log => {
+        const logDate = Date.parse(log.date);
+        return logDate > beginDate && logDate < endDate;
+      });
+    }
+    const areas = Array.from(new Set(logs.map(log => log.ski_area))).sort();
+    let areasString =
+      areas.length > 1
+        ? areas.slice(0, -1).join(', ') + ' and ' + areas.slice(-1)
+        : areas[0];
+    const days = new Set(logs.map(log => log.date)).size;
+    const vert = logs.reduce((acc, cur) => acc + cur.vert, 0);
+
     return (
       <section>
-        <h3>{`${timeString}`}</h3>
+        {timeString && <h3>{`${timeString}`}</h3>}
         <p>
-          12 days, at Vail, Aspen, and Beaver Creek. 200,000 ft of vertical
-          gained.
+          {days} days, at {areasString}. {vert} ft of vertical recorded.
         </p>
-        <p>TODO: chart</p>
+        {/* TODO: chart */}
         {/* Chart should show past month along the x-axis, activity at each area on y-axis */}
       </section>
     );

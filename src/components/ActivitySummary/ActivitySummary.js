@@ -6,8 +6,24 @@ export class ActivitySummary extends Component {
     return (
       <div>
         <h2>My Activity</h2>
-        <ActivityByTime time="month" current={true} />
-        <ActivityByTime time="season" current={true} />
+        {this.props.checked && this.props.logs.length && (
+          <>
+            <ActivityByTime
+              time="month"
+              current={true}
+              logs={this.props.logs}
+            />
+            <ActivityByTime
+              time="season"
+              current={true}
+              logs={this.props.logs}
+            />
+          </>
+        )}
+        {this.props.checked && this.props.logs.length == 0 && (
+          <p>We can't seem to find any record of your activity.</p>
+        )}
+        {!this.props.checked && <p>Summarizing your activity...</p>}
       </div>
     );
   }
