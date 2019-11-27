@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthApiService from '../../services/auth-api-service';
 import TokenService from '../../services/token-service';
+import AccountContext from '../../contexts/AccountContext';
 
 export class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = { error: null };
   }
+
+  static contextType = AccountContext;
   handleSubmitJwtAuth = event => {
     event.preventDefault();
     this.setState({ error: null });
@@ -21,7 +24,9 @@ export class LoginForm extends Component {
         user_name.value = '';
         password.value = '';
         TokenService.saveAuthToken(res.authToken);
-        this.props.onLogin();
+        const { onLogin } = this.context;
+        onLogin();
+        console.log('push: /dashboard');
         this.props.history.push('/dashboard');
       })
       .catch(res => {
@@ -34,7 +39,7 @@ export class LoginForm extends Component {
     return (
       <form className="LoginForm" onSubmit={this.handleSubmitJwtAuth}>
         <div role="alert">
-          {error && <p className="login-error error">{<>error</>}</p>}
+          {error && <p className="login-error error">{this.state.error}</p>}
         </div>
         <div className="user_name">
           <label htmlFor="LoginForm__user_name">User name</label>

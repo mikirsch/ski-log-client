@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import TimeSelector from '../TimeSelector/TimeSelector';
 import DataApiService from '../../services/data-api-service';
 import ResultsViewer from '../ResultsViewer/ResultsViewer';
-import {
-  formatDate,
-  onChangeUtil,
-  tzFix
-} from '../../Utilities/UtilityFunctions';
+import { formatDate, onChangeUtil } from '../../Utilities/UtilityFunctions';
 
 export class ViewData extends Component {
   state = {

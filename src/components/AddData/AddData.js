@@ -3,6 +3,7 @@ import AddBasics from '../AddBasics/AddBasics';
 import DataApiService from '../../services/data-api-service';
 import { onChangeUtil } from '../../Utilities/UtilityFunctions';
 import Vert from '../Vert/Vert';
+import { truncateSync } from 'fs';
 
 export class AddActivity extends Component {
   constructor(props) {
@@ -112,9 +113,10 @@ export class AddActivity extends Component {
             htmlFor="add-ski"
             onClick={this.handleSubmit}
             disabled={
+              this.state.submitted ||
               this.state.error ||
               this.state.durationError ||
-              this.state.submitted
+              !this.state.newArea
             }
           >
             Submit

@@ -20,7 +20,7 @@ export class ActivitySummary extends Component {
             />
           </>
         )}
-        {this.props.checked && this.props.logs.length == 0 && (
+        {this.props.checked && this.props.logs.length === 0 && (
           <p>We can't seem to find any record of your activity.</p>
         )}
         {!this.props.checked && <p>Summarizing your activity...</p>}

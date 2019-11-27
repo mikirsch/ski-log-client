@@ -58,12 +58,16 @@ export class ActivityByTime extends Component {
         : areas[0];
     const days = new Set(logs.map(log => log.date)).size;
     const vert = logs.reduce((acc, cur) => acc + cur.vert, 0);
+    const daysWithVert = new Set(
+      logs.filter(log => log.vert > 0).map(log => log.date)
+    ).size;
 
     return (
       <section>
         {timeString && <h3>{`${timeString}`}</h3>}
         <p>
-          {days} days, at {areasString}. {vert} ft of vertical recorded.
+          {days} days, at {areasString}. {vert} ft of vertical recorded (an
+          average of {vert / daysWithVert} per day with vertical recorded).
         </p>
         {/* TODO: chart */}
         {/* Chart should show past month along the x-axis, activity at each area on y-axis */}

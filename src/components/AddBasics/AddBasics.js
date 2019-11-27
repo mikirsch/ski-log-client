@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { formatDate } from '../../Utilities/UtilityFunctions';
+import './AddBasics.css';
 
 export class AddBasics extends Component {
   render() {

@@ -11,6 +11,17 @@ const AuthApiService = {
     }).then(res =>
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
     );
+  },
+  postSignup({ user_name, password }) {
+    return fetch(`${API_ENDPOINT}/signup`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ user_name, password })
+    }).then(res =>
+      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
+    );
   }
 };
 

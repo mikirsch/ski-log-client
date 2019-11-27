@@ -14,10 +14,11 @@ export class VertCalcSection extends Component {
     return (
       <fieldset>
         <legend>Run {index + 1}</legend>
-        <select id={`type${index}`}>
+        {/* Todo: start saving lifts */}
+        {/* <select id={`type${index}`}>
           <option value="lift">Lift</option>
           <option value="other">Other (estimated)</option>
-        </select>
+        </select> */}
         {/* <input type="text" id={`liftName${index}`} /> */}
         <input
           type="number"
