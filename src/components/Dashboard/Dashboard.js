@@ -31,7 +31,6 @@ export class Dashboard extends Component {
 
         <section>
           <h2>Been Skiing?</h2>
-          <p>quick add form?</p>
           <p>
             <Link to="add-data">Add data</Link>
           </p>

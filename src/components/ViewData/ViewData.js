@@ -6,7 +6,7 @@ import { formatDate, onChangeUtil } from '../../Utilities/UtilityFunctions';
 
 export class ViewData extends Component {
   state = {
-    timeframe: 'custom',
+    timeframe: 'all',
     resultType: 'list',
     chooseTime: true,
     beginDate: formatDate(new Date()),

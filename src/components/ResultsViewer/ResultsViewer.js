@@ -16,10 +16,6 @@ export class ResultsViewer extends Component {
     return <ActivityByTime logs={results} filter={false} />;
   };
 
-  listNotes = results => {
-    //stub
-  };
-
   summaryArea = results => {
     const areas = Array.from(new Set(results.map(result => result.ski_area)));
     console.log(areas);
@@ -31,7 +27,6 @@ export class ResultsViewer extends Component {
             (acc, cur) => (cur.ski_area === area ? ++acc : acc),
             0
           );
-          console.log(`${area}: ${days} days`);
           return <DisplayArea area={area} days={days} />;
         })}
       </ul>
@@ -40,7 +35,9 @@ export class ResultsViewer extends Component {
 
   render() {
     const results = this.props.results;
+
     if (results) {
+      results.sort((a, b) => b.date < a.date);
       switch (this.props.type) {
         case 'list':
           return this.listResults(results);
