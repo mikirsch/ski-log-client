@@ -17,7 +17,9 @@ export class AddActivity extends Component {
       error: null,
       submitted: false,
       vert: false,
-      totalVert: 0
+      totalVert: 0,
+      notetoggle: false,
+      notes: ''
     };
   }
 

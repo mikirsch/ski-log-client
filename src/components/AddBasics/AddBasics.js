@@ -61,6 +61,29 @@ export class AddBasics extends Component {
           // value={readState.duration}
           onChange={this.props.handleDurationChange}
         />
+        <div>
+          <div>
+            <input
+              type="checkbox"
+              id="notetoggle"
+              checked={readState.notetoggle}
+              onChange={this.props.handleToggle}
+            />{' '}
+            <label htmlFor="notetoggle">
+              I would like to add some notes to this visit
+            </label>
+          </div>
+          {readState.nottoggle && (
+            <textarea
+              name="notes"
+              id="notes"
+              value={readState.notes}
+              onChange={event =>
+                this.props.handleGenericChange('notes', event.target.value)
+              }
+            />
+          )}
+        </div>
         <input
           type="checkbox"
           id="vert"

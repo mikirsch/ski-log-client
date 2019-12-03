@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 40rem;
+  margin: auto;
 }
 
 input,
@@ -11,3 +13,4 @@ select {
 .error {
   color: red;
 }
+
