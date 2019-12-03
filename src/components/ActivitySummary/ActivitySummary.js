@@ -6,7 +6,7 @@ export class ActivitySummary extends Component {
     return (
       <div>
         <h2>My Activity</h2>
-        {this.props.checked && this.props.logs.length && (
+        {this.props.checked && this.props.logs.length > 0 && (
           <>
             <ActivityByTime
               time="month"

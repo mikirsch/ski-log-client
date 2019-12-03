@@ -3,7 +3,6 @@ import AddBasics from '../AddBasics/AddBasics';
 import DataApiService from '../../services/data-api-service';
 import { onChangeUtil } from '../../Utilities/UtilityFunctions';
 import Vert from '../Vert/Vert';
-import { truncateSync } from 'fs';
 
 export class AddActivity extends Component {
   constructor(props) {

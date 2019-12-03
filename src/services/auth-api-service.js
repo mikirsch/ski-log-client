@@ -13,6 +13,8 @@ const AuthApiService = {
     );
   },
   postSignup({ user_name, password }) {
+    console.log(user_name);
+    console.log(password);
     return fetch(`${API_ENDPOINT}/signup`, {
       method: 'POST',
       headers: {

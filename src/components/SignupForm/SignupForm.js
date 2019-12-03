@@ -20,34 +20,33 @@ export class SignupForm extends Component {
 
   onChange = event => {
     const newState = onChangeUtil(event, this.state);
-    newState.ok = this.validate();
+    const { ok, error } = this.validate(newState);
+    newState.ok = ok;
+    newState.error = error;
     this.setState(newState);
   };
 
-  validate = () => {
+  validate = state => {
     let ok = true;
-    if (
-      !this.state.user_name ||
-      !this.state.password ||
-      !this.state.passwordConfirm
-    ) {
+    let error = null;
+    if (!state.user_name || !state.password || !state.passwordConfirm) {
       ok = false;
-    } else if (this.state.password !== this.state.passwordConfirm) {
+    } else if (state.password !== state.passwordConfirm) {
       ok = false;
-    } else if (this.state.password.length < 8) {
+      error = 'Passwords do not match';
+    } else if (state.password.length < 8) {
       ok = false;
-    } else if (this.state.user_name.length < 1) {
-      ok = false;
+      error = 'Passwords must be at least 8 characters long';
     }
 
-    return ok;
+    return { ok, error };
   };
 
   handleSubmit = event => {
     console.log('event');
     event.preventDefault();
     this.setState({ error: null });
-    const { user_name, password } = event.target;
+    const { user_name, password } = this.state;
 
     AuthApiService.postSignup({ user_name, password })
       .then(res => {
@@ -58,7 +57,8 @@ export class SignupForm extends Component {
         this.props.history.push('/dashboard');
       })
       .catch(res => {
-        this.setState({ error: res.error });
+        console.log(res);
+        return <div></div>;
       });
   };
   render() {

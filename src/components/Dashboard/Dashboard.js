@@ -15,9 +15,9 @@ export class Dashboard extends Component {
       beginDate: '1900-01-01',
       endDate: formatDate(new Date())
     };
-    DataApiService.getLogs(options).then(logs =>
-      this.setState({ logs, checked: true })
-    );
+    DataApiService.getLogs(options)
+      .then(logs => this.setState({ logs, checked: true }))
+      .catch(err => this.setState({ checked: true }));
   }
 
   render() {

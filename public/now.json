@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "alias": "mikirsch-fresh-tracks",
+  "name": "ski-tracker",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
+}
