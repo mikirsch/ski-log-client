@@ -110,9 +110,9 @@ export class ViewData extends Component {
               <option value="list-notes">List visits with notes</option>
               <option value="summary-area">Summarize by ski area</option>
               {/* <option value="area-time">Ski areas by time spent</option> */}
-              <option value="notes-for-area">
+              {/* <option value="notes-for-area">
                 Find notes tied to a ski area
-              </option>
+              </option> */}
             </select>
             <button type="button" onClick={this.handleSubmit}>
               Go

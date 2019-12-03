@@ -27,7 +27,7 @@ export class ResultsViewer extends Component {
             (acc, cur) => (cur.ski_area === area ? ++acc : acc),
             0
           );
-          return <DisplayArea area={area} days={days} />;
+          return <DisplayArea area={area} days={days} key={area} />;
         })}
       </ul>
     );
