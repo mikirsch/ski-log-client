@@ -73,7 +73,7 @@ export class AddBasics extends Component {
               I would like to add some notes to this visit
             </label>
           </div>
-          {readState.nottoggle && (
+          {readState.notetoggle && (
             <textarea
               name="notes"
               id="notes"

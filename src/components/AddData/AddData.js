@@ -75,11 +75,13 @@ export class AddActivity extends Component {
     const log = {
       date: date.toISOString(),
       duration,
-      ski_area: newArea,
-      location: 'NYI'
+      ski_area: newArea
     };
     if (this.state.vert) {
       log.vert = this.state.totalVert;
+    }
+    if (this.state.notetoggle) {
+      log.notes = this.state.notes;
     }
     DataApiService.postLog(log);
     this.setState({ submitted: true });

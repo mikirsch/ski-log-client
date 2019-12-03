@@ -58,7 +58,7 @@ export class SignupForm extends Component {
       })
       .catch(res => {
         console.log(res);
-        return <div></div>;
+        return null;
       });
   };
   render() {

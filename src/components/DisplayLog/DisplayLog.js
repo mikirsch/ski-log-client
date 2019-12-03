@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './DisplayLog.css';
 
 export class DisplayLog extends Component {
   formateDate(date) {
@@ -9,7 +10,7 @@ export class DisplayLog extends Component {
     const log = this.props.log;
 
     return (
-      <div>
+      <div className="log">
         <p>
           {' '}
           <span className="subresult">
@@ -28,6 +29,7 @@ export class DisplayLog extends Component {
               }`}
           </span>
         </p>
+        {log.notes && <p>{log.notes}</p>}
       </div>
     );
   }

@@ -8,13 +8,11 @@ export class Vert extends Component {
   }
   updateSectionVert = (index, newTotal) => {
     let vertBySection = [...this.state.vertBySection];
-    console.log(Array.isArray(vertBySection));
     vertBySection[index] = newTotal;
     this.setState({ vertBySection }, this.updateTotalVert);
   };
   updateTotalVert = () => {
     let total = this.state.vertBySection.reduce((acc, cur) => acc + cur, 0);
-    console.log(total);
     this.props.genericChange('totalVert', total);
   };
   render() {

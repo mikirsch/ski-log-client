@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 
 export class ActivityByTime extends Component {
   defaultProps;
+
+  renderVert(vert, daysWithVert) {
+    if (daysWithVert > 0) {
+      return (
+        <>
+          {vert} ft of vertical recorded (an average of {vert / daysWithVert}{' '}
+          per day with vertical recorded).
+        </>
+      );
+    }
+    return <></>;
+  }
   render() {
     const { time, current, start, filter } = this.props;
     this.defaultProps = { filter: true };
@@ -66,8 +78,8 @@ export class ActivityByTime extends Component {
       <section>
         {timeString && <h3>{`${timeString}`}</h3>}
         <p>
-          {days} days, at {areasString}. {vert} ft of vertical recorded (an
-          average of {vert / daysWithVert} per day with vertical recorded).
+          {days} {days === 1 ? 'day' : 'days'}, at {areasString}.{' '}
+          {this.renderVert(vert, daysWithVert)}
         </p>
         {/* TODO: chart */}
         {/* Chart should show past month along the x-axis, activity at each area on y-axis */}

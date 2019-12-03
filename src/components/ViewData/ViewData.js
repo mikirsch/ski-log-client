@@ -33,7 +33,6 @@ export class ViewData extends Component {
   };
 
   handleSubmit = event => {
-    console.log(event);
     event.preventDefault();
     const options = { ...this.state };
     delete options.chooseTime;

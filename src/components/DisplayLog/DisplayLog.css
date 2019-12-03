@@ -1,0 +1,7 @@
+.log {
+  border: 1px solid grey;
+  margin: 2px auto;
+  width: 30rem;
+  border-radius: 5px;
+  background-color: white;
+}

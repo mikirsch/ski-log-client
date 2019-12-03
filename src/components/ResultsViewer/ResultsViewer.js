@@ -42,7 +42,7 @@ export class ResultsViewer extends Component {
         case 'list':
           return this.listResults(results);
         case 'list-notes':
-          return this.listResults(results.filter(result => !!result.note));
+          return this.listResults(results.filter(result => !!result.notes));
         case 'summary-time':
           return this.summaryTime(results);
         case 'summary-area':
