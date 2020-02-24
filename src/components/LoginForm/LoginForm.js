@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import AuthApiService from '../../services/auth-api-service';
 import TokenService from '../../services/token-service';
 import AccountContext from '../../contexts/AccountContext';
+import('./LoginForm.css');
 
 export class LoginForm extends Component {
   constructor(props) {
@@ -43,28 +44,33 @@ export class LoginForm extends Component {
   render() {
     const { error } = this.state;
     return (
-      <form className="LoginForm" onSubmit={this.handleSubmitJwtAuth}>
-        <div role="alert">
-          {error && <p className="login-error error">{this.state.error}</p>}
-        </div>
-        <div className="user_name">
-          <label htmlFor="LoginForm__user_name">User name</label>
-          <input required name="user_name" id="LoginForm__user_name" />
-        </div>
-        <div className="password">
-          <label htmlFor="LoginForm__password">Password</label>
-          <input
-            required
-            name="password"
-            type="password"
-            id="LoginForm__password"
-          />
-        </div>
-        <button type="submit">Login</button>
-        <button type="button" onClick={this.demo}>
-          Demo
+      <>
+        <h1 className="light">Welcome back</h1>
+        <form className="LoginForm" onSubmit={this.handleSubmitJwtAuth}>
+          <div role="alert">
+            {error && <p className="login-error error">{this.state.error}</p>}
+          </div>
+          <div className="user_name">
+            {' '}
+            <label htmlFor="LoginForm__user_name">Username: </label>
+            <input required name="user_name" id="LoginForm__user_name" />
+          </div>
+          <div className="password">
+            <label htmlFor="LoginForm__password">Password: </label>
+            <input
+              required
+              name="password"
+              type="password"
+              id="LoginForm__password"
+            />
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p className="minspace">or</p>
+        <button className="demo" type="button" onClick={this.demo}>
+          Try without an account
         </button>
-      </form>
+      </>
     );
   }
 }

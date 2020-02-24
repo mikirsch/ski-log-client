@@ -48,7 +48,6 @@ export class ViewData extends Component {
         break;
       case 'month':
         let month = new Date(options.beginDate);
-        this.tzfix(month);
         options.beginDate = formatDate(
           new Date(month.getFullYear(), month.getMonth(), 1)
         );

@@ -1,0 +1,13 @@
+.form-line {
+  position: relative;
+  left: -4rem;
+}
+
+.signup label {
+  display: inline-block;
+  width: 10rem;
+  text-align: right;
+}
+.signup input {
+  display: inline-block;
+}

@@ -6,26 +6,51 @@ import AccountContext from '../../contexts/AccountContext';
 
 export class Nav extends Component {
   static contextType = AccountContext;
+  state = {
+    expanded: false
+  };
+
+  toggleExpand = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
 
   renderStatefulItems = () => {
     const { loggedIn, onLogout } = this.context;
     if (loggedIn) {
       return (
-        <li>
-          <Link to="/" onClick={onLogout}>
-            Log out
-          </Link>
-        </li>
+        <>
+          {' '}
+          <li>
+            <Link to="/dashboard" onClick={this.toggleExpand}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/"
+              onClick={() => {
+                onLogout();
+                this.toggleExpand();
+              }}
+            >
+              Log out
+            </Link>
+          </li>
+        </>
       );
     }
 
     return (
       <>
         <li>
-          <Link to="/login">Log in</Link>
+          <Link to="/login" onClick={this.toggleExpand}>
+            Log in
+          </Link>
         </li>
         <li>
-          <Link to="/signup">Sign up</Link>
+          <Link to="/signup" onClick={this.toggleExpand}>
+            Sign up
+          </Link>
         </li>
       </>
     );
@@ -34,12 +59,18 @@ export class Nav extends Component {
   render() {
     return (
       <div className="Nav">
-        <ul className="navbar">
-          <li>
-            <Link to="/">Home</Link>
+        <ul className={`navbar ${this.state.expanded || 'min'}`}>
+          <li className="nav-menu">
+            <button onClick={this.toggleExpand}>
+              <i
+                className={`fas fa-${this.state.expanded ? 'times' : 'bars'}`}
+              ></i>
+            </button>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/" onClick={this.toggleExpand}>
+              Home
+            </Link>
           </li>
           {this.renderStatefulItems()}
         </ul>

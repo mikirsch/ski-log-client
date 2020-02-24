@@ -1,10 +1,95 @@
 ul.navbar {
   list-style: none;
+  text-align: left;
+  padding-inline-start: 0;
+  position: absolute;
+  top: 0rem;
+  background-color: lightgrey;
 }
+ul.navbar.min {
+  background-color: transparent;
+}
+
 .navbar li {
-  display: inline-block;
+  display: block;
+  padding: 0.25rem 0.5rem;
+  border-top: 2px solid darkgrey;
 }
-.navbar li ~ li ::before {
-  content: '|';
-  padding: 0 2rem;
+
+.navbar li:hover {
+  background-color: darkgrey;
+}
+
+.navbar a:hover {
+  background-color: transparent;
+  padding: 0 0 0 0.5em;
+}
+
+.navbar li.nav-menu {
+  background-color: transparent;
+  border: none;
+}
+
+.navbar a {
+  /* color: black; */
+  /* text-decoration: none; */
+  display: block;
+  padding-left: 0.5em;
+}
+
+.navbar.min li:not(.nav-menu) {
+  display: none;
+}
+
+.nav-menu button {
+  font-size: 1.5rem;
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+  margin: auto;
+  text-align: left;
+  width: 100%;
+  display: block;
+}
+@media screen and (min-width: 800px) {
+  /* switch to static navbar */
+
+  .navbar li.nav-menu {
+    display: none;
+  }
+  /* need to hide separator on element right after nav-menu*/
+  .navbar li.nav-menu + li::before {
+    display: none;
+  }
+  ul.navbar {
+    list-style: none;
+    position: static;
+    text-align: center;
+    background-color: transparent;
+  }
+  .navbar li {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+  }
+  .navbar li:hover {
+    background-color: transparent;
+  }
+  .navbar a {
+    display: inline;
+    padding: 0.25em 0.5em;
+  }
+  .navbar a:hover {
+    background-color: lightgray;
+  }
+
+  .navbar li ~ li::before {
+    content: '|';
+    margin: 0 2rem;
+  }
+
+  .navbar.min li:not(.nav-menu) {
+    display: inline-block;
+  }
 }

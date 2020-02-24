@@ -1,0 +1,24 @@
+.LoginForm {
+  width: fit-content;
+  margin: auto;
+  padding: 0.5rem;
+  /* font-weight: 400; */
+}
+
+.LoginForm div {
+  position: relative;
+  left: -3rem;
+}
+
+.LoginForm label {
+  display: inline-block;
+  width: 6rem;
+  text-align: right;
+}
+.LoginForm input {
+  display: inline-block;
+}
+
+p.minspace {
+  margin: -0.25rem 0 0.25rem 0;
+}

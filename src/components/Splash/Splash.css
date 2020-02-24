@@ -1,13 +1,42 @@
-.splash-main {
+/* .splash-main {
   background-image: url('/pexels-photo-3600571.jpeg');
   background-repeat: no-repeat;
   min-height: 600px;
   margin: auto;
   background-size: contain;
+} */
+
+.splash-image {
+  display: none;
 }
 
-/*@media screen and (min-width: 600px) {
-  .splash::before {
-    background-image: url('/pexels-photo-326260.jpeg');
+.splash-main h1 {
+  color: white;
+}
+
+@media screen and (min-width: 800px) {
+  .splash-main {
+    font-size: 125%;
   }
-} */
+  .splash-image {
+    display: block;
+    position: absolute;
+    width: 100vw;
+    left: 0vw;
+    top: 4rem;
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+  .splash-main section {
+    /* adjust spacing based on size of image to keep the text legible */
+    margin-top: calc(150px + ((100vw - 800px) * 0.36));
+  }
+}
+
+.splash-main a:hover {
+  background-color: lightskyblue;
+  color: black;
+  padding: 0.25rem;
+  margin: -0.25rem;
+}

@@ -3,6 +3,7 @@ import AccountContext from '../../contexts/AccountContext';
 import AuthApiService from '../../services/auth-api-service';
 import TokenService from '../../services/token-service';
 import { onChangeUtil } from '../../Utilities/UtilityFunctions';
+import('./SignupForm.css');
 
 export class SignupForm extends Component {
   constructor(props) {
@@ -69,31 +70,37 @@ export class SignupForm extends Component {
           <section>
             <h2>Sign Up</h2>
             {this.state.error && <p className="error">{this.state.error}</p>}
-            <form name="signup" id="signup" action="">
-              <label htmlFor="username">Username: </label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                value={this.state.username}
-                onChange={this.onChange}
-              />
-              <label htmlFor="password">Password: </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={this.state.password}
-                onChange={this.onChange}
-              />
-              <label htmlFor="passwordConfirm">Confirm password: </label>
-              <input
-                type="password"
-                name="passwordConfirm"
-                id="passwordConfirm"
-                value={this.state.passwordConfirm}
-                onChange={this.onChange}
-              />
+            <form className="signup" name="signup" id="signup" action="">
+              <div className="form-line">
+                <label htmlFor="username">Username: </label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-line">
+                <label htmlFor="password">Password: </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-line">
+                <label htmlFor="passwordConfirm">Confirm password: </label>
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  id="passwordConfirm"
+                  value={this.state.passwordConfirm}
+                  onChange={this.onChange}
+                />
+              </div>
               <button
                 type="button"
                 name="signup"
