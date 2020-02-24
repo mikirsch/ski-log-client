@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export class Splash extends Component {
   render() {
     return (
-      <main role="main">
+      <main role="main" className="splash-main">
         <header role="banner">
           <h1>Fresh Tracks</h1>
           <h2>Ski tracking. Unconstrained.</h2>

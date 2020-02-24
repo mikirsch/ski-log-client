@@ -15,23 +15,29 @@ export class LoginForm extends Component {
     event.preventDefault();
     this.setState({ error: null });
     const { user_name, password } = event.target;
-
-    AuthApiService.postLogin({
-      user_name: user_name.value,
-      password: password.value
-    })
+    const username = user_name.value;
+    const pass = password.value;
+    AuthApiService.postLogin(username, pass)
       .then(res => {
         user_name.value = '';
         password.value = '';
         TokenService.saveAuthToken(res.authToken);
         const { onLogin } = this.context;
         onLogin();
-        console.log('push: /dashboard');
         this.props.history.push('/dashboard');
       })
-      .catch(res => {
-        this.setState({ error: res.error });
+      .catch(e => {
+        this.setState({ error: e.error });
       });
+  };
+
+  demo = () => {
+    this.setState({ error: null });
+    AuthApiService.postLogin('', '', true).then(res => {
+      TokenService.saveAuthToken(res.authToken);
+      this.context.onLogin();
+      this.props.history.push('/dashboard');
+    });
   };
 
   render() {
@@ -55,6 +61,9 @@ export class LoginForm extends Component {
           />
         </div>
         <button type="submit">Login</button>
+        <button type="button" onClick={this.demo}>
+          Demo
+        </button>
       </form>
     );
   }

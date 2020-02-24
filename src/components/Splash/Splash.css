@@ -1,0 +1,13 @@
+.splash-main {
+  background-image: url('/pexels-photo-3600571.jpeg');
+  background-repeat: no-repeat;
+  min-height: 600px;
+  margin: auto;
+  background-size: contain;
+}
+
+/*@media screen and (min-width: 600px) {
+  .splash::before {
+    background-image: url('/pexels-photo-326260.jpeg');
+  }
+} */

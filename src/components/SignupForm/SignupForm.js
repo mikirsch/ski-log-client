@@ -9,7 +9,7 @@ export class SignupForm extends Component {
     super(props);
     this.state = {
       error: null,
-      user_name: '',
+      username: '',
       password: '',
       passwordConfirm: '',
       ok: false
@@ -29,7 +29,7 @@ export class SignupForm extends Component {
   validate = state => {
     let ok = true;
     let error = null;
-    if (!state.user_name || !state.password || !state.passwordConfirm) {
+    if (!state.username || !state.password || !state.passwordConfirm) {
       ok = false;
     } else if (state.password !== state.passwordConfirm) {
       ok = false;
@@ -43,12 +43,10 @@ export class SignupForm extends Component {
   };
 
   handleSubmit = event => {
-    console.log('event');
     event.preventDefault();
     this.setState({ error: null });
-    const { user_name, password } = this.state;
-
-    AuthApiService.postSignup({ user_name, password })
+    const { username, password } = this.state;
+    AuthApiService.postSignup(username, password)
       .then(res => {
         this.setState({ password: '', passwordConfirm: '', ok: false });
         TokenService.saveAuthToken(res.authToken);
@@ -72,12 +70,12 @@ export class SignupForm extends Component {
             <h2>Sign Up</h2>
             {this.state.error && <p className="error">{this.state.error}</p>}
             <form name="signup" id="signup" action="">
-              <label htmlFor="user_name">Username: </label>
+              <label htmlFor="username">Username: </label>
               <input
                 type="text"
-                name="user_name"
-                id="user_name"
-                value={this.state.user_name}
+                name="username"
+                id="username"
+                value={this.state.username}
                 onChange={this.onChange}
               />
               <label htmlFor="password">Password: </label>
