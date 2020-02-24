@@ -1,0 +1,12 @@
+.vert-section input {
+  display: inline-block;
+}
+.vert-section label {
+  display: inline-block;
+  width: 2rem;
+  text-align: left;
+}
+
+.vert-section .form-line {
+  position: static;
+}

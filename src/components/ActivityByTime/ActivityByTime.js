@@ -7,8 +7,8 @@ export class ActivityByTime extends Component {
     if (daysWithVert > 0) {
       return (
         <>
-          {vert} ft of vertical recorded (an average of {vert / daysWithVert}{' '}
-          per day with vertical recorded).
+          {vert} ft of vertical recorded (an average of{' '}
+          {(vert / daysWithVert).toFixed(0)} per day with vertical recorded).
         </>
       );
     }
